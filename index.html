@@ -2,13 +2,63 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-    <link href="/src/styles.css" rel="stylesheet">
+
+    <!-- Primary site metadata -->
+    <title>Saadi Collections</title>
+    <meta name="description" content="Saadi Collections — Quality ethnic & modern wear. Shop curated outfits, accessories and more. Fast delivery, secure checkout and great customer support." />
+    <meta name="keywords" content="Saadi Collections, ethnic wear, fashion, kurta, shalwar kameez, Pakistani fashion, online clothing, accessories" />
+    <meta name="author" content="Saadi Collections" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Favicons / Touch icons (public folder served at root in Vite) -->
+    <link rel="icon" type="image/png" href="/Saadi.png" />
+    <link rel="apple-touch-icon" href="/Saadi.png" />
+    <!-- optional smaller SVG icon if you have vite.svg or other -->
+    <link rel="icon" type="image/svg+xml" href="/Saadi.png" />
+
+    <!-- Social preview (Open Graph) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Saadi Collections" />
+    <meta property="og:description" content="Shop curated ethnic & modern wear at Saadi Collections — quality products, fast delivery and secure checkout." />
+    <meta property="og:image" content="/Saadi.png" />
+    <meta property="og:image:alt" content="Saadi Collections logo" />
+    <meta property="og:url" content="/" />
+    <meta property="og:site_name" content="Saadi Collections" />
+
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Saadi Collections" />
+    <meta name="twitter:description" content="Shop curated ethnic & modern wear at Saadi Collections." />
+    <meta name="twitter:image" content="/Saadi.png" />
+
+    <!-- Mobile / theme -->
+    <meta name="theme-color" content="#0b1724" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- Canonical URL (replace with your real site URL in production) -->
+    <link rel="canonical" href="/" />
+
+    <!-- Optional: web app manifest (create /site.webmanifest if you want PWA behavior) -->
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Structured data (JSON-LD) - replace placeholders (url, logo) with real values -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Saadi Collections",
+        "url": "/",
+        "logo": "/Saadi.png",
+        "sameAs": []
+      }
+    </script>
+
+    <!-- Styles and app entry -->
+    <link href="/src/styles.css" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/src/index.jsx"></script>
   </body>
 </html>
