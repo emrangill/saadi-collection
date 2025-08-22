@@ -3,27 +3,12 @@ import { getProducts } from "../../services/firebase.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 
-const sliderImages = [
-  "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80",
-];
-
 const LandingPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [sortedProducts, setSortedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
-    }, 3500);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,16 +46,10 @@ const LandingPage = () => {
     setSortedProducts(sorted);
   };
 
-  const goToSlide = (i) => setCurrentSlide(i);
-
   return (
     <div className="landing">
-      <div className="topbar">
-        <span>⭐ 18 Million+ Satisfied Customers</span>
-        <span>30 Days Hassle-Free Returns</span>
-        <span>1 Year International Warranty</span>
-      </div>
 
+      {/* Hero Section */}
       <section className="hero">
         <h1>
           Welcome to <span>Saadi Collection</span>
@@ -83,44 +62,7 @@ const LandingPage = () => {
         <button onClick={() => navigate("/about")}>Learn More</button>
       </section>
 
-      <section className="slider-section">
-        <div className="slider">
-          {sliderImages.map((img, idx) => (
-            <div
-              key={idx}
-              className={`slide ${currentSlide === idx ? "active" : ""}`}
-              style={{ backgroundImage: `url(${img})` }}
-            >
-              {currentSlide === idx && (
-                <div className="caption">
-                  <h2>
-                    {idx === 0 && "New Arrivals"}
-                    {idx === 1 && "Premium Shoes"}
-                    {idx === 2 && "Luxury Bags"}
-                    {idx === 3 && "Makeup & Accessories"}
-                  </h2>
-                  <p>
-                    {idx === 0 && "Discover our latest fashion trends!"}
-                    {idx === 1 && "Step up your style game."}
-                    {idx === 2 && "Carry elegance wherever you go."}
-                    {idx === 3 && "Glow with premium makeup products."}
-                  </p>
-                </div>
-              )}
-            </div>
-          ))}
-          <div className="slider-controls">
-            {sliderImages.map((_, idx) => (
-              <span
-                key={idx}
-                className={`dot${currentSlide === idx ? " active" : ""}`}
-                onClick={() => goToSlide(idx)}
-              ></span>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      {/* Products Section */}
       <section className="products">
         <div className="products-header">
           <span>{sortedProducts.length} Products</span>
@@ -157,31 +99,61 @@ const LandingPage = () => {
         )}
       </section>
 
-      <section className="info-section">
-        <div className="info-container">
-          <h2>Why Choose Saadi Collection?</h2>
-          <p>
-            Elevate your shopping experience with our curated selection of premium fashion, accessories, and lifestyle products. 
-            Unmatched quality, trendsetting designs, and customer-first service are at the heart of everything we do.
-          </p>
-          <ul>
-            <li>✔️ Fast and Secure Delivery across Pakistan</li>
-            <li>✔️ 24/7 Customer Support</li>
-            <li>✔️ 100% Authentic Products</li>
-            <li>✔️ Multiple Payment Methods</li>
-            <li>✔️ Weekly New Arrivals & Exclusive Discounts</li>
-          </ul>
-          <div className="info-buttons">
-            <button onClick={() => navigate("/categories")}>
-              Explore Categories
-            </button>
-            <button onClick={() => navigate("/contact")}>
-              Contact Support
-            </button>
+      {/* Brand Info Section - attractive background */}
+      <section className="brand-info">
+        <div className="brand-info-bg">
+          <div className="brand-info-content">
+            <div className="brand-info-title">
+              <h2>Why Choose <span className="highlight">Saadi Collection?</span></h2>
+            </div>
+            <div className="brand-info-features">
+              <div className="feature">
+                <span className="feature-icon">🛍️</span>
+                <div>
+                  <h3>Exclusive Products</h3>
+                  <p>Only the best for your wardrobe – premium quality, latest trends, and unique finds.</p>
+                </div>
+              </div>
+              <div className="feature">
+                <span className="feature-icon">⚡</span>
+                <div>
+                  <h3>Fast Delivery</h3>
+                  <p>Reliable nationwide shipping, so your favorites reach you quickly and safely.</p>
+                </div>
+              </div>
+              <div className="feature">
+                <span className="feature-icon">💳</span>
+                <div>
+                  <h3>Secure Payments</h3>
+                  <p>Shop with confidence using multiple secure payment options.</p>
+                </div>
+              </div>
+              <div className="feature">
+                <span className="feature-icon">🎁</span>
+                <div>
+                  <h3>Weekly New Arrivals</h3>
+                  <p>Stay ahead in fashion with fresh styles added every week.</p>
+                </div>
+              </div>
+              <div className="feature">
+                <span className="feature-icon">🤝</span>
+                <div>
+                  <h3>24/7 Customer Care</h3>
+                  <p>Our friendly team is always available for your questions and support.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="brand-info-image">
+            <img
+              src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80"
+              alt="Saadi Collection Brand"
+            />
           </div>
         </div>
       </section>
 
+      {/* WhatsApp Button */}
       <a
         href="https://wa.me/923165548374"
         className="whatsapp-float"
@@ -200,42 +172,22 @@ const LandingPage = () => {
 
       <style jsx>{`
         .landing { padding: 0; margin: 0; }
-        .topbar { display:flex; justify-content:space-around; background:#f5f5f5; padding:0.8rem; font-size:0.9rem; font-weight:500; color:#333; border-bottom:1px solid #ddd; }
-        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("https://images.unsplash.com/photo-1521334884684-d80222895322") no-repeat center center/cover; color:#fff; text-align:center; padding:6rem 2rem; }
+        .hero {
+          background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("https://images.unsplash.com/photo-1521334884684-d80222895322") no-repeat center center/cover;
+          color: #fff;
+          text-align: center;
+          padding: 6rem 2rem;
+        }
         .hero h1 { font-size:3rem; color:#f4c542; }
         .hero p { font-size:1.3rem; margin-top:1rem; max-width:800px; margin-left:auto; margin-right:auto; }
         .hero button { margin-top:1.5rem; padding:0.8rem 2rem; border:none; background:#f4c542; color:#1a1a1a; font-size:1.1rem; font-weight:bold; border-radius:8px; cursor:pointer; transition:0.3s; }
         .hero button:hover { background:#e0b631; }
-        .slider-section { width: 100%; max-width: 1200px; margin: 3rem auto 0 auto; padding: 0 2rem; box-sizing:border-box; }
-        .slider { position:relative; width:100%; height:340px; overflow:hidden; border-radius:22px; box-shadow:0 8px 32px rgba(0,0,0,0.12); background: #fafafa;}
-        .slide {
-          position:absolute;
-          top:0; left:0; width:100%; height:100%;
-          background-size:cover;
-          background-position:center;
-          opacity:0; transition:opacity 1s cubic-bezier(.77,0,.18,1);
-          z-index:1;
-          display:flex; align-items:center; justify-content:center;
+        @media (max-width:768px) {
+          .hero { padding:2.2rem 1rem 1.5rem 1rem; }
+          .hero h1 { font-size:2rem; }
+          .hero p { font-size:1.05rem; }
+          .hero button { font-size:1rem; padding:0.7rem 1.2rem; }
         }
-        .slide.active { opacity:1; z-index:2; }
-        .caption {
-          background:rgba(0,0,0,0.35);
-          color:#fff;
-          padding:2rem 2.2rem;
-          border-radius:14px;
-          box-shadow:0 2px 12px rgba(0,0,0,0.12);
-          text-align:center;
-          max-width:420px;
-        }
-        .caption h2 { font-size:2.1rem; margin-bottom:1rem; color:#f4c542;}
-        .caption p { font-size:1.15rem; }
-        .slider-controls {
-          position:absolute; bottom:16px; left:0; right:0; display:flex; justify-content:center; gap:9px;
-        }
-        .slider-controls .dot {
-          width:16px; height:16px; background:#fff; border-radius:50%; opacity:0.4; cursor:pointer; border:2px solid #f4c542; transition:opacity 0.2s;
-        }
-        .slider-controls .dot.active { opacity:0.95; background:#f4c542; border-color:#333; }
         .products { margin-top:3rem; padding:2rem; }
         .products-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; }
         .products-header select { padding:0.6rem 0.8rem; border:1px solid #ccc; border-radius:6px; outline:none; }
@@ -253,72 +205,130 @@ const LandingPage = () => {
         .price .old { font-size:0.95rem; color:#999; text-decoration:line-through; }
         .card-body button { margin-top:0.5rem; padding:0.6rem 1.2rem; border:none; background:#1a1a1a; color:#fff; border-radius:6px; cursor:pointer; transition:background 0.3s ease; }
         .card-body button:hover { background:#28a745; }
-        .info-section {
-          background: linear-gradient(90deg,#f4c54233 0%, #fff 100%);
-          padding: 3.5rem 2rem 4.5rem 2rem;
-          margin-top: 3rem;
-          border-radius: 18px;
-          max-width: 1100px;
-          margin-left: auto;
-          margin-right: auto;
-          box-shadow: 0 6px 28px rgba(0,0,0,0.07);
-        }
-        .info-container { max-width: 720px; margin: 0 auto; text-align: center; }
-        .info-container h2 {
-          font-size: 2.3rem;
-          color: #1a1a1a;
-          margin-bottom: 1.1rem;
-          font-weight: 700;
-          letter-spacing: 1px;
-        }
-        .info-container p {
-          font-size: 1.22rem;
-          color: #555;
-          margin-bottom: 2.1rem;
-        }
-        .info-container ul {
-          list-style: none;
-          padding: 0;
-          margin: 0 0 2.2rem 0;
-        }
-        .info-container ul li {
-          font-size: 1.09rem;
-          color: #222;
-          margin-bottom: 1rem;
-          padding-left: 0.2rem;
-          text-align: left;
-          max-width: 520px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-        .info-buttons {
+
+        /* Brand Info Section - Attractive background */
+        .brand-info {
+          width: 100%;
+          margin: 0 auto 2rem auto;
           display: flex;
           justify-content: center;
-          gap: 2rem;
-          margin-top: 1.2rem;
         }
-        .info-buttons button {
-          padding: 0.8rem 2rem;
-          border: none;
-          background: #1a1a1a;
+        .brand-info-bg {
+          background: linear-gradient(135deg,#f4c542 0%, #ff9c6d 60%, #fcb800 100%);
+          border-radius: 28px;
+          box-shadow: 0 10px 38px rgba(44,62,80,0.11);
+          max-width: 1100px;
+          width: 100%;
+          padding: 2.8rem 2.2rem;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          gap: 2.2rem;
+        }
+        .brand-info-content {
+          flex: 2 1 390px;
+          min-width: 280px;
+        }
+        .brand-info-title h2 {
+          font-size: 2.2rem;
+          font-weight: 700;
+          color: #222;
+          margin-bottom: 1.2rem;
+          letter-spacing: 0.5px;
+        }
+        .brand-info-title .highlight {
           color: #fff;
-          font-size: 1rem;
-          font-weight: bold;
-          border-radius: 8px;
-          cursor: pointer;
-          transition: background 0.3s;
+          background: #222;
+          border-radius: 7px;
+          padding: 2px 10px;
         }
-        .info-buttons button:hover {
-          background: #f4c542;
+        .brand-info-features {
+          display: flex;
+          flex-direction: column;
+          gap: 1.1rem;
+        }
+        .feature {
+          display: flex;
+          align-items: flex-start;
+          gap: 1.1rem;
+          background: rgba(255,255,255,0.97);
+          border-radius: 12px;
+          box-shadow: 0 2px 18px rgba(44,62,80,0.03);
+          padding: 1.1rem 1rem;
+          transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .feature:hover {
+          box-shadow: 0 6px 24px rgba(244,197,66,0.14);
+          transform: translateY(-2px) scale(1.02);
+        }
+        .feature-icon {
+          font-size: 2.1rem;
+          color: #f4c542;
+          margin-right: 0.1rem;
+          flex-shrink: 0;
+        }
+        .feature h3 {
+          font-size: 1.15rem;
+          font-weight: 700;
+          margin: 0 0 0.2rem 0;
           color: #222;
         }
+        .feature p {
+          font-size: 1rem;
+          margin: 0;
+          color: #444;
+        }
+        .brand-info-image {
+          flex: 1 1 270px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .brand-info-image img {
+          width: 100%;
+          max-width: 310px;
+          min-width: 200px;
+          border-radius: 18px;
+          box-shadow: 0 4px 18px rgba(44,62,80,0.12);
+          object-fit: cover;
+        }
+        @media (max-width:1100px){
+          .brand-info-bg {
+            flex-direction: column-reverse;
+            padding: 2rem 0.7rem;
+            gap: 1.5rem;
+          }
+          .brand-info-image {
+            margin-bottom: 1.3rem;
+          }
+          .brand-info-title h2 {
+            font-size: 1.6rem;
+          }
+        }
+        @media (max-width:700px) {
+          .brand-info-bg {
+            padding: 1.5rem 0.2rem;
+          }
+          .brand-info-title h2 {
+            font-size: 1.15rem;
+          }
+          .brand-info-content {
+            min-width: 160px;
+          }
+          .feature h3 { font-size: 1rem; }
+          .feature p { font-size: 0.92rem; }
+          .feature-icon { font-size: 1.5rem; }
+          .brand-info-image img { max-width: 190px; border-radius: 11px; }
+        }
+
         .whatsapp-float {
           position: fixed;
-          bottom: 22px;
-          right: 22px;
+          bottom: 60px;
+          right: 16px;
           z-index: 9999;
-          width: 54px;
-          height: 54px;
+          width: 46px;
+          height: 46px;
           background: #25D366;
           border-radius: 50%;
           box-shadow: 0 6px 18px rgba(0,0,0,0.16);
@@ -334,33 +344,8 @@ const LandingPage = () => {
         .whatsapp-float svg {
           display: block;
         }
-        @media (max-width:1200px) {
-          .slider-section { max-width: 100vw; }
-        }
-        @media (max-width:1100px) {
-          .slider-section { padding: 0 0.5rem; }
-          .info-section { padding:2rem 0.8rem 3rem 0.8rem; }
-        }
-        @media (max-width:900px) {
-          .slider-section { padding:0; }
-        }
-        @media (max-width:768px) {
-          .hero h1 { font-size:2.2rem; }
-          .slider-section {padding: 0; margin: 2rem auto 0 auto; max-width:100vw;}
-          .slider { height: 200px; border-radius: 12px; }
-          .caption { padding: 1rem 0.6rem; max-width: 260px; }
-          .info-section { padding:1.2rem 0.5rem 2rem 0.5rem; }
-          .info-container h2 { font-size:1.3rem; }
-          .info-container p { font-size:0.99rem; }
-          .info-container ul li { font-size:0.95rem; }
-          .info-buttons button { font-size:0.95rem; padding:0.7rem 1.5rem; }
-        }
         @media (max-width:600px) {
-          .slider-section {padding: 0; margin: 1rem auto 0 auto; width: 100vw; max-width: 100vw;}
-          .slider { height: 120px; border-radius: 7px;}
-          .caption { padding: 0.6rem 0.3rem; max-width: 160px;}
-          .whatsapp-float {right: 12px; bottom: 12px; width: 46px; height: 46px;}
-          .info-section { padding:0.7rem 0.1rem 1.4rem 0.1rem; }
+          .whatsapp-float { bottom: 110px; right: 10px; width: 38px; height: 38px; }
         }
       `}</style>
     </div>
