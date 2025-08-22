@@ -31,18 +31,59 @@ import Discounts from './pages/admin/Discounts.jsx';
 import Categories from './pages/admin/Categories.jsx';
 import AdminLogin from './pages/admin/AdminLogin.jsx';
 
+import React, { useState, useEffect } from "react";
+
 function App() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
+  // Loader state for full app (navbar + auth + landing)
+  const [pageLoading, setPageLoading] = useState(true);
+
+  // Wait for auth context to load
+  useEffect(() => {
+    if (!authLoading) {
+      // Wait for next tick, so Navbar can access user (removes flicker)
+      const timer = setTimeout(() => setPageLoading(false), 100);
+      return () => clearTimeout(timer);
+    } else {
+      setPageLoading(true);
+    }
+  }, [authLoading]);
 
   // AdminRoute: if user is logged in AND has role 'admin' allow access,
   // otherwise redirect to /admin/login.
   const AdminRoute = ({ children }) => {
-    // If user object has role set to 'admin', allow.
     if (user && user.role === 'admin') return children;
-
-    // Not admin (or not logged in) -> redirect to admin login.
     return <Navigate to="/admin/login" replace />;
   };
+
+  if (pageLoading) {
+    return (
+      <div className="global-loader">
+        <div className="spinner"></div>
+        <style jsx="true">{`
+          body { overflow: hidden !important; }
+          .global-loader {
+            position: fixed;
+            inset: 0; width: 100vw; height: 100vh;
+            background: #fff;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.3s;
+          }
+          .spinner {
+            width: 54px; height: 54px;
+            border: 6px solid #f4c542;
+            border-top: 6px solid #fff;
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+          }
+          @keyframes spin {
+            to {transform: rotate(360deg);}
+          }
+        `}</style>
+      </div>
+    );
+  }
 
   return (
     <BrowserRouter>

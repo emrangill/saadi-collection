@@ -12,11 +12,7 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  // Show loading state while user data is being fetched
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
+  // Remove loader from Navbar. Always render Navbar, show skeleton while loading user.
   return (
     <>
       <nav className="navbar">
@@ -37,8 +33,16 @@ const Navbar = () => {
           <button onClick={() => navigate("/about")}>About</button>
           <button onClick={() => navigate("/contact")}>Contact</button>
 
+          {/* Show skeleton loader while user is loading */}
+          {loading && (
+            <div className="nav-skeleton">
+              <div className="skeleton-btn" />
+              <div className="skeleton-btn" />
+            </div>
+          )}
+
           {/* Extra links for BUYER */}
-          {user && user.role === "buyer" && (
+          {!loading && user && user.role === "buyer" && (
             <>
               <button onClick={() => navigate("/buyer/order-history")}>Orders</button>
               <button onClick={() => navigate("/buyer/wishlist")}>Wishlist</button>
@@ -50,7 +54,7 @@ const Navbar = () => {
           )}
 
           {/* Extra links for SELLER */}
-          {user && user.role === "seller" && (
+          {!loading && user && user.role === "seller" && (
             <>
               <button onClick={() => navigate("/seller/add-product")}>Add Product</button>
               <button onClick={() => navigate("/seller/orders")}>Orders</button>
@@ -60,14 +64,14 @@ const Navbar = () => {
           )}
 
           {/* Logout for ADMIN, but NO admin links */}
-          {user && user.role === "admin" && (
+          {!loading && user && user.role === "admin" && (
             <>
               <button onClick={handleLogout}>Logout</button>
             </>
           )}
 
           {/* Show Login button if NOT logged in */}
-          {!user && (
+          {!loading && !user && (
             <button onClick={() => navigate("/login")}>Login</button>
           )}
         </div>
@@ -97,6 +101,7 @@ const Navbar = () => {
         .nav-links {
           display: flex;
           gap: 1rem;
+          align-items: center;
         }
 
         .nav-links button {
@@ -116,6 +121,23 @@ const Navbar = () => {
           display: none;
           font-size: 1.8rem;
           cursor: pointer;
+        }
+
+        .nav-skeleton {
+          display: flex;
+          gap: 0.6rem;
+        }
+        .skeleton-btn {
+          width: 72px;
+          height: 28px;
+          background: #222;
+          border-radius: 6px;
+          opacity: 0.42;
+          animation: skeleton-blink 1s linear infinite alternate;
+        }
+        @keyframes skeleton-blink {
+          0% { opacity: 0.42; }
+          100% { opacity: 0.72;}
         }
 
         @media (max-width: 768px) {

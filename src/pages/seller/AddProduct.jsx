@@ -50,6 +50,7 @@ const AddProduct = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    // For price, always store as string for control
     setProduct(prev => ({ ...prev, [name]: value }));
   };
 
@@ -107,9 +108,18 @@ const AddProduct = () => {
         });
       }
 
+      // Price: If user enters decimal, save as float. If integer, save as int.
+      // (Firebase will store as number, not string)
+      let priceValue;
+      if (product.price.includes('.')) {
+        priceValue = parseFloat(product.price);
+      } else {
+        priceValue = parseInt(product.price, 10);
+      }
+
       const productData = {
         name: product.name.trim(),
-        price: parseFloat(product.price),
+        price: priceValue,
         stock: parseInt(product.stock, 10),
         description: product.description ? product.description.trim() : '',
         category: product.category,
@@ -136,6 +146,15 @@ const AddProduct = () => {
     }
   };
 
+  // Format price for display: if decimal entered, show as 2000.50; if integer, show as 2000
+  function formatPriceDisplay(price) {
+    if (price === undefined || price === null || price === '') return '';
+    const num = Number(price);
+    if (Number.isNaN(num)) return price;
+    if (price.toString().includes('.')) return num.toFixed(2);
+    return num.toString();
+  }
+
   return (
     <>
       <div className="add-product-page">
@@ -148,12 +167,28 @@ const AddProduct = () => {
 
           <div className="input-group">
             <label htmlFor="price">Price (Rs)</label>
-            <input id="price" name="price" type="number" step="0.01" value={product.price} onChange={handleInputChange} placeholder="Enter price" required disabled={loading} />
+            <input
+              id="price"
+              name="price"
+              type="number"
+              step="0.01"
+              value={product.price}
+              onChange={handleInputChange}
+              placeholder="Enter price"
+              required
+              disabled={loading}
+              min="0"
+            />
+            {product.price && (
+              <div className="price-display">
+                Display: Rs. {formatPriceDisplay(product.price)}
+              </div>
+            )}
           </div>
 
           <div className="input-group">
             <label htmlFor="stock">Stock</label>
-            <input id="stock" name="stock" type="number" value={product.stock} onChange={handleInputChange} placeholder="Enter stock quantity" required disabled={loading} />
+            <input id="stock" name="stock" type="number" value={product.stock} onChange={handleInputChange} placeholder="Enter stock quantity" required disabled={loading} min="0" />
           </div>
 
           <div className="input-group">
@@ -197,6 +232,7 @@ const AddProduct = () => {
         .input-group textarea { min-height:100px; resize:vertical; }
         .image-preview { margin-top:.5rem; width:100%; height:220px; background:#fafafa; border:1px dashed #e0e0e0; border-radius:6px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
         .image-preview img { width:100%; height:100%; object-fit:contain; }
+        .price-display { font-size: 0.98rem; color: #2b6c2b; margin-top: 0.3rem; }
         button { width:100%; padding:.75rem; border-radius:6px; background:#28a745; color:#fff; border:none; cursor:pointer; font-size:1rem; }
         button:disabled { background:#cfcfcf; cursor:not-allowed; }
       `}</style>

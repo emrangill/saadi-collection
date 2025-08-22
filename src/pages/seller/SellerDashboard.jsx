@@ -526,7 +526,7 @@ const SellerDashboard = () => {
                                   <div className="product-name" title={prod.name}>{prod.name}</div>
                                   <div className="product-cat">{categoriesMap[prod.category] || prod.category}</div>
                                 </div>
-                                <div className="product-price">${Number(prod.price || 0).toFixed(2)}</div>
+                                <div className="product-price">Rs:{Number(prod.price || 0).toFixed(2)}</div>
                               </div>
                               <div className="product-desc">{prod.description}</div>
                               <div className="product-footer">

@@ -246,7 +246,7 @@ const Product = () => {
                   <div className="meta">
                     <div className="price-row">
                       <div className="price">
-                        <span className="current">${price.toFixed(2)}</span>
+                        <span className="current">Rs{price.toFixed(2)}</span>
                         {hasDiscount && <span className="compare">${compareAt.toFixed(2)}</span>}
                       </div>
                       <div className="rating" aria-label={`Rating ${product.rating || 'unrated'}`}>
