@@ -1,16 +1,10 @@
-name: my-react-app
-services:
-  - name: web
-    github:
-      repo: your-username/your-repo
-      branch: main
-      deploy_on_push: true
+name: saadi-collection
+static_sites:
+  - name: saadi-collection
+    source_dir: /
     build_command: npm run build
-    run_command: npx serve -s build
-    environment_slug: node-js
-    http_port: 8080
+    output_dir: build
     routes:
       - path: /
-        preserve_path_prefix: true
         index_document: index.html
         error_document: index.html
