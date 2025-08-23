@@ -8,6 +8,7 @@ import { useAuth } from '../../context/AuthContext.jsx';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -23,6 +24,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError(''); // Clear previous error
     try {
       const userCredential = await signInWithEmail(email, password);
       const { role, approved } = await getUserRoleAndApproval(userCredential.user.uid);
@@ -32,19 +34,27 @@ const Login = () => {
         navigate('/seller/dashboard');
       } else if (role === 'seller' && !approved) {
         navigate('/');
-        alert('Your seller account is pending approval.');
+        setError('Your seller account is pending approval.');
       } else if (role === 'admin') {
         navigate('/admin/dashboard');
       } else {
         navigate('/');
       }
     } catch (err) {
-      alert('Login failed: ' + err.message);
+      if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+        setError('User not found or incorrect password');
+      } else {
+        setError('Login failed: An unexpected error occurred');
+      }
     }
   };
 
   const handleSignUpRedirect = () => {
     navigate('/signup');
+  };
+
+  const handleAdminLoginRedirect = () => {
+    navigate('/admin/login');
   };
 
   return (
@@ -75,11 +85,13 @@ const Login = () => {
                 required
               />
             </div>
+            {error && <div className="error-message">{error}</div>}
             <button type="submit" className="login-button">Login</button>
           </form>
           <div className="signup-options">
             <p>Don't have an account?</p>
             <button onClick={handleSignUpRedirect} className="signup-button">Sign Up</button>
+            <button onClick={handleAdminLoginRedirect} className="admin-login-button">Admin Login</button>
           </div>
         </div>
       </div>
@@ -128,6 +140,12 @@ const Login = () => {
           outline: none;
           border-color: #007bff;
         }
+        .error-message {
+          color: #dc3545;
+          font-size: 0.9rem;
+          margin-bottom: 1rem;
+          text-align: left;
+        }
         .login-button {
           width: 100%;
           background-color: #007bff;
@@ -163,6 +181,20 @@ const Login = () => {
         }
         .signup-button:hover {
           background-color: #218838;
+        }
+        .admin-login-button {
+          width: 100%;
+          background-color: #6c757d;
+          color: #fff;
+          border: none;
+          padding: 0.5rem;
+          border-radius: 5px;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+        .admin-login-button:hover {
+          background-color: #5a6268;
         }
         @media (max-width: 768px) {
           .login-container {
