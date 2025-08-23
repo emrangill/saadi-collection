@@ -8,7 +8,7 @@ import { getDoc, doc as fsDoc } from 'firebase/firestore';
 import { db } from '../../services/firebase.js';
 
 // JazzCash Admin Account Details (replace with actual)
-const ADMIN_JAZZCASH_ACCOUNT = "03254064933"; // replace with real JazzCash number
+const ADMIN_JAZZCASH_ACCOUNT = "03409751709"; // replace with real JazzCash number
 
 const Checkout = () => {
   const { user } = useAuth();
@@ -245,7 +245,7 @@ const Checkout = () => {
         user.email,
         shipping,
         {
-          paymentMethod: 'jazzcash',
+          paymentMethod: 'Easypaisa',
           paymentStatus: 'pending', // Always pending when order is placed
           transactionId
         }
