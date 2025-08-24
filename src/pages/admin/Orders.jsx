@@ -637,7 +637,7 @@ export default function Orders() {
                         <div className="card actions">
                           <div className="row"><strong>Order total:</strong> {currency(order.total)}</div>
                           <div className="row"><strong>Created:</strong> {formatDate(order.createdAt)}</div>
-                          <div className="row"><strong>JazzCash Txn ID:</strong> {order.payment?.transactionId || order.transactionId || "—"}</div>
+                          <div className="row"><strong>Easypaisa Txn ID:</strong> {order.payment?.transactionId || order.transactionId || "—"}</div>
                           <div className="row"><strong>Payment Status:</strong> <span style={{color: order.paymentStatus === "paid" ? "green" : "#f59e0b"}}>{order.paymentStatus || "pending"}</span></div>
                           <div className="controls">
                             {order.paymentStatus !== "paid" && (

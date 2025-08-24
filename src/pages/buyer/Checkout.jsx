@@ -7,8 +7,8 @@ import { getImageUrl } from '../../utils/localImageStore.js';
 import { getDoc, doc as fsDoc } from 'firebase/firestore';
 import { db } from '../../services/firebase.js';
 
-// JazzCash Admin Account Details (replace with actual)
-const ADMIN_JAZZCASH_ACCOUNT = "03409751709"; // replace with real JazzCash number
+// Easypaisa Admin Account Details (replace with actual)
+const ADMIN_EASYPAY_ACCOUNT = "03409751709"; // replace with real Easypaisa number
 
 const Checkout = () => {
   const { user } = useAuth();
@@ -187,7 +187,7 @@ const Checkout = () => {
     return (items.reduce((sum, item) => sum + (Number(item.price || 0) * Number(item.quantity || 1)), 0)).toFixed(2);
   };
 
-  // Buyer enters JazzCash transaction id and places order
+  // Buyer enters Easypaisa transaction id and places order
   const handleCheckout = async (e) => {
     e.preventDefault();
     if (!user) {
@@ -204,7 +204,7 @@ const Checkout = () => {
       return;
     }
     if (!transactionId || transactionId.length < 8) {
-      alert('Please enter a valid JazzCash Transaction ID');
+      alert('Please enter a valid Easypaisa Transaction ID');
       return;
     }
     setLoading(true);
@@ -344,17 +344,17 @@ const Checkout = () => {
               <h2 style={{marginTop:"2rem"}}>Payment Method</h2>
               <div className="payment-method-box">
                 <p>
-                  <strong>JazzCash (Direct to Admin)</strong><br/>
-                  Please pay <b>Rs. {amountToPay}</b> to JazzCash Account: <span className="jazzcash-account">{ADMIN_JAZZCASH_ACCOUNT}</span>
+                  <strong>Easypaisa (Direct to Admin)</strong><br/>
+                  Please pay <b>Rs. {amountToPay}</b> to Easypaisa Account: <span className="jazzcash-account">{ADMIN_EASYPAY_ACCOUNT}</span>
                 </p>
-                <label htmlFor="transactionId">JazzCash Transaction ID (after payment):</label>
+                <label htmlFor="transactionId">Easypaisa Transaction ID (after payment):</label>
                 <input
                   id="transactionId"
                   name="transactionId"
                   type="text"
                   value={transactionId}
                   onChange={e => setTransactionId(e.target.value)}
-                  placeholder="Enter JazzCash Transaction ID"
+                  placeholder="Enter Easypaisa Transaction ID"
                   required
                 />
                 <div className="payment-status payment-status-pending">

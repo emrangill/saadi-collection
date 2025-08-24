@@ -16,9 +16,8 @@ const LandingPage = () => {
         setLoading(true);
         const productsData = (await getProducts()) || [];
         const available = productsData.filter((p) => Number(p.stock) > 0);
-        const limited = available.slice(0, 12);
-        setProducts(limited);
-        setSortedProducts(limited);
+        setProducts(available);
+        setSortedProducts(available);
       } catch (err) {
         console.error("Failed to load products:", err);
         setProducts([]);
