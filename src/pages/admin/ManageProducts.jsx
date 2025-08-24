@@ -85,7 +85,7 @@ const ManageProducts = () => {
                   <h3 title={product.name}>{product.name}</h3>
                   <p className="category">{product.categoryName}</p>
                   <p className="description">{product.description}</p>
-                  <p className="price">Price: ${Number(product.price || 0).toFixed(2)}</p>
+                  <p className="price">Price: Rs{Number(product.price || 0).toFixed(2)}</p>
                   <p className="stock">{product.inStock ? 'In Stock' : 'Out of Stock'}</p>
                   <button className="danger" onClick={() => handleDelete(product.id)}>Delete</button>
                 </div>

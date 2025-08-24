@@ -95,12 +95,12 @@ const AdminDashboard = () => {
       {/* Sidebar (only navigation control) */}
       <aside className="sidebar" aria-label="Admin navigation">
         <div className="brand-wrap">
-          <div className="brand">MyEcom</div>
+          <div className="brand">Saadi Collection</div>
           <div className="brand-sub">Admin Panel</div>
         </div>
 
         <nav className="side-nav" aria-label="Admin navigation">
-          <button className="nav-item active" onClick={() => navigate('/admin')}>Dashboard</button>
+          <button className="nav-item active" onClick={() => navigate('/admin/admindashboard')}>Dashboard</button>
           <button className="nav-item" onClick={() => navigate('/admin/users')}>Manage Users</button>
           <button className="nav-item" onClick={() => navigate('/admin/products')}>Manage Products</button>
           <button className="nav-item" onClick={() => navigate('/admin/orders')}>Manage Orders</button>
